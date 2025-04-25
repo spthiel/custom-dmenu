@@ -1,0 +1,25 @@
+From 5f20e2bd16982b4beb76cbc73d9657869b984227 Mon Sep 17 00:00:00 2001
+From: Kathanina Thiel <sp4rklingskull@gmail.com>
+Date: Sun, 6 Apr 2025 21:02:06 +0200
+Subject: [PATCH] Removes need for sudo.
+
+---
+ config.mk | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/config.mk b/config.mk
+index 137f7c8..ae01495 100644
+--- a/config.mk
++++ b/config.mk
+@@ -2,7 +2,7 @@
+ VERSION = 5.3
+
+ # paths
+-PREFIX = /usr/local
++PREFIX = ../bin
+ MANPREFIX = $(PREFIX)/share/man
+
+ X11INC = /usr/X11R6/include
+--
+2.34.1
+

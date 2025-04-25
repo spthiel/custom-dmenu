@@ -1,0 +1,50 @@
+From 00d222610ad56c81a0d8a7c1c8c9512b0706338a Mon Sep 17 00:00:00 2001
+From: Kathanina Thiel <sp4rklingskull@gmail.com>
+Date: Sun, 6 Apr 2025 21:18:49 +0200
+Subject: [PATCH] Add border to dmenu.
+
+---
+ config.def.h | 3 +++
+ dmenu.c      | 6 +++++-
+ 2 files changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/config.def.h b/config.def.h
+index 809c96e..0866dd8 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -28,3 +28,6 @@ static unsigned int lines      = 0;
+  * for example: " /?\"&[]"
+  */
+ static const char worddelimiters[] = " ";
++
++/* Size of the window border */
++static unsigned int border_width = 0;
+diff --git a/dmenu.c b/dmenu.c
+index fff6201..48c689f 100644
+--- a/dmenu.c
++++ b/dmenu.c
+@@ -696,9 +696,11 @@ setup(void)
+ 	swa.border_pixel = 0;
+ 	swa.colormap = cmap;
+ 	swa.event_mask = ExposureMask | KeyPressMask | VisibilityChangeMask;
+-	win = XCreateWindow(dpy, root, x, y, mw, mh, 0,
++	win = XCreateWindow(dpy, root, x, y, mw, mh, border_width,
+ 	                    depth, CopyFromParent, visual,
+ 	                    CWOverrideRedirect | CWBackPixel | CWBorderPixel | CWColormap | CWEventMask, &swa);
++	if (border_width)
++		XSetWindowBorder(dpy, win, scheme[SchemeSel][ColBg].pixel);
+ 	XSetClassHint(dpy, win, &ch);
+ 
+ 	/* input methods */
+@@ -769,6 +771,8 @@ main(int argc, char *argv[])
+ 			colors[SchemeSel][ColFg] = argv[++i];
+ 		else if (!strcmp(argv[i], "-w"))   /* embedding window id */
+ 			embed = argv[++i];
++		else if (!strcmp(argv[i], "-bw"))
++			border_width = atoi(argv[++i]); /* border width */
+ 		else
+ 			usage();
+ 
+-- 
+2.34.1
+

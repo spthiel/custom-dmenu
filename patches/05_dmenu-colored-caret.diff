@@ -1,0 +1,47 @@
+From 107371cde0951c4ee19e4365a0b6c18aced85e60 Mon Sep 17 00:00:00 2001
+From: Kathanina Thiel <sp4rklingskull@gmail.com>
+Date: Sun, 6 Apr 2025 21:25:08 +0200
+Subject: [PATCH] Allow coloring the caret.
+
+---
+ config.def.h | 1 +
+ dmenu.c      | 4 ++--
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/config.def.h b/config.def.h
+index 07f08f0..a7988ee 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -15,6 +15,7 @@ static const char *colors[SchemeLast][2] = {
+ 	[SchemeNorm] = { "#bbbbbb", "#222222" },
+ 	[SchemeSel] = { "#eeeeee", "#005577" },
+ 	[SchemeOut] = { "#000000", "#00ffff" },
++	[SchemeCaret] = { "#eeeeee", "#222222" },
+ };
+ 
+ static const unsigned int alphas[SchemeLast][2] = {
+diff --git a/dmenu.c b/dmenu.c
+index 5f2d64f..76080a3 100644
+--- a/dmenu.c
++++ b/dmenu.c
+@@ -29,7 +29,7 @@
+ #define OPAQUE                0xffu
+ 
+ /* enums */
+-enum { SchemeNorm, SchemeSel, SchemeOut, SchemeLast }; /* color schemes */
++enum { SchemeNorm, SchemeSel, SchemeOut, SchemeCaret, SchemeLast }; /* color schemes */
+ 
+ struct item {
+ 	char *text;
+@@ -182,7 +182,7 @@ drawmenu(void)
+ 
+ 	curpos = TEXTW(text) - TEXTW(&text[cursor]);
+ 	if ((curpos += lrpad / 2 - 1) < w) {
+-		drw_setscheme(drw, scheme[SchemeNorm]);
++		drw_setscheme(drw, scheme[SchemeCaret]);
+ 		drw_rect(drw, x + curpos, 2, 2, bh - 4, 1, 0);
+ 	}
+ 
+-- 
+2.34.1
+
